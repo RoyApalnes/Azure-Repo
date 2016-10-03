@@ -20,10 +20,100 @@
         "Description": "The administrator account password on the VM."
       }
     },
-    "dnsNameForPublicIP": {
+    "imagePublisher": {
       "type": "string",
       "metadata": {
-        "Description": "The name of the public IP address used to access the VM."
+        "Description": "The name of the VM image publisher company."
+      }
+    },
+    "imageOffer": {
+      "type": "string",
+      "metadata": {
+        "Description": "The name of the VM image offer grouping."
+      }
+    },
+    "windowsOSVersion": {
+      "type": "string",
+      "metadata": {
+        "Description": "The version of the VM image."
+      }
+    },
+    "OSDiskName": {
+      "type": "string",
+      "metadata": {
+        "Description": "The name of the VMs OS Disk."
+      }
+    },
+    "nicName": {
+      "type": "string",
+      "metadata": {
+        "Description": "The name of the VMs NIC01."
+      }
+    },
+    "addressPrefix": {
+      "type": "string",
+      "metadata": {
+        "Description": "The subnet of the Virtual Network."
+      }
+    },
+    "subnetName": {
+      "type": "string",
+      "metadata": {
+        "Description": "The name of the subnet."
+      }
+    },
+    "subnetName": {
+      "type": "string",
+      "metadata": {
+        "Description": "The name of the subnet."
+      }
+    },
+    "subnetPrefixP": {
+      "type": "string",
+      "metadata": {
+        "Description": "The adresses of the subnet."
+      }
+    },
+    "storageAccountType": {
+      "type": "string",
+      "metadata": {
+        "Description": "The storage account type."
+      }
+    },
+    "publicIPAddressName": {
+      "type": "string",
+      "metadata": {
+        "Description": "The name of the Public IP address."
+      }
+    },
+    "publicIPAddressType": {
+      "type": "string",
+      "metadata": {
+        "Description": "The type of the Public IP address."
+      }
+    },
+    "vmStorageAccountContainerName": {
+      "type": "string",
+      "metadata": {
+        "Description": "The name of the Storage Account Container."
+      }
+    },
+    "vmName": {
+      "type": "string",
+      "metadata": {
+        "Description": "The name of the Virtual Machine."
+      }
+    },
+    "vmSize": {
+      "type": "string",
+      "metadata": {
+        "Description": "The size of the Virtual Machine."
+      }
+    },
+    "virtualNetworkName": {
+      "type": "string",
+      "metadata": {
+        "Description": "The name of the Virtual Network."
       }
     },
     "location": {
@@ -34,23 +124,8 @@
     }
   },
   "variables": {
-    "imagePublisher": "MicrosoftWindowsServer",
-    "imageOffer": "WindowsServer",
-    "windowsOSVersion": "Windows-Server-Technical-Preview",
-    "OSDiskName": "DEMO-DC01-OSdisk01",
-    "nicName": "DEMO-DC01-NIC01",
-    "addressPrefix": "10.0.0.0/16",
-    "subnetName": "DEMO-Backend",
-    "subnetPrefix": "10.0.0.0/24",
-    "storageAccountType": "Standard_GRS",
-    "publicIPAddressName": "DEMO-DC01-PIP01",
-    "publicIPAddressType": "Dynamic",
-    "vmStorageAccountContainerName": "vhds",
-    "vmName": "DEMO-DC01",
-    "vmSize": "Standard_F1",
-    "virtualNetworkName": "DEMO-VN01",
-    "vnetID": "[resourceId('Microsoft.Network/virtualNetworks',variables('virtualNetworkName'))]",
-    "subnetRef": "[concat(variables('vnetID'),'/subnets/',variables('subnetName'))]"
+    "vnetID": "[resourceId('Microsoft.Network/virtualNetworks',parameters('virtualNetworkName'))]",
+    "subnetRef": "[concat(variables('vnetID'),'/subnets/',parameters('subnetName'))]"
   },
   "resources": [
     {
@@ -59,16 +134,16 @@
       "apiVersion": "2015-06-15",
       "location": "[parameters('location')]",
       "properties": {
-        "accountType": "[variables('storageAccountType')]"
+        "accountType": "[parameters('storageAccountType')]"
       }
     },
     {
       "apiVersion": "2016-03-30",
       "type": "Microsoft.Network/publicIPAddresses",
-      "name": "[variables('publicIPAddressName')]",
+      "name": "[parameters('publicIPAddressName')]",
       "location": "[parameters('location')]",
       "properties": {
-        "publicIPAllocationMethod": "[variables('publicIPAddressType')]",
+        "publicIPAllocationMethod": "[parameters('publicIPAddressType')]",
         "dnsSettings": {
           "domainNameLabel": "[parameters('dnsNameForPublicIP')]"
         }
@@ -77,19 +152,19 @@
     {
       "apiVersion": "2016-03-30",
       "type": "Microsoft.Network/virtualNetworks",
-      "name": "[variables('virtualNetworkName')]",
+      "name": "[parameters('virtualNetworkName')]",
       "location": "[parameters('location')]",
       "properties": {
         "addressSpace": {
           "addressPrefixes": [
-            "[variables('addressPrefix')]"
+            "[parameters('addressPrefix')]"
           ]
         },
         "subnets": [
           {
-            "name": "[variables('subnetName')]",
+            "name": "[parameters('subnetName')]",
             "properties": {
-              "addressPrefix": "[variables('subnetPrefix')]"
+              "addressPrefix": "[parameters('subnetPrefix')]"
             }
           }
         ]
@@ -98,11 +173,11 @@
     {
       "apiVersion": "2016-03-30",
       "type": "Microsoft.Network/networkInterfaces",
-      "name": "[variables('nicName')]",
+      "name": "[parameters('nicName')]",
       "location": "[parameters('location')]",
       "dependsOn": [
-        "[concat('Microsoft.Network/publicIPAddresses/', variables('publicIPAddressName'))]",
-        "[concat('Microsoft.Network/virtualNetworks/', variables('virtualNetworkName'))]"
+        "[concat('Microsoft.Network/publicIPAddresses/', parameters('publicIPAddressName'))]",
+        "[concat('Microsoft.Network/virtualNetworks/', parameters('virtualNetworkName'))]"
       ],
       "properties": {
         "ipConfigurations": [
@@ -111,7 +186,7 @@
             "properties": {
               "privateIPAllocationMethod": "Dynamic",
               "publicIPAddress": {
-                "id": "[resourceId('Microsoft.Network/publicIPAddresses',variables('publicIPAddressName'))]"
+                "id": "[resourceId('Microsoft.Network/publicIPAddresses',parameters('publicIPAddressName'))]"
               },
               "subnet": {
                 "id": "[variables('subnetRef')]"
@@ -124,32 +199,32 @@
     {
       "apiVersion": "2016-03-30",
       "type": "Microsoft.Compute/virtualMachines",
-      "name": "[variables('vmName')]",
+      "name": "[parameters('vmName')]",
       "location": "[parameters('location')]",
       "dependsOn": [
         "[concat('Microsoft.Storage/storageAccounts/', parameters('newStorageAccountName'))]",
-        "[concat('Microsoft.Network/networkInterfaces/', variables('nicName'))]"
+        "[concat('Microsoft.Network/networkInterfaces/', parameters('nicName'))]"
       ],
       "properties": {
         "hardwareProfile": {
-          "vmSize": "[variables('vmSize')]"
+          "vmSize": "[parameters('vmSize')]"
         },
         "osProfile": {
-          "computername": "[variables('vmName')]",
+          "computername": "[parameters('vmName')]",
           "adminUsername": "[parameters('adminUsername')]",
           "adminPassword": "[parameters('adminPassword')]"
         },
         "storageProfile": {
           "imageReference": {
-            "publisher": "[variables('imagePublisher')]",
-            "offer": "[variables('imageOffer')]",
-            "sku" : "[variables('windowsOSVersion')]",
+            "publisher": "[parameters('imagePublisher')]",
+            "offer": "[parameters('imageOffer')]",
+            "sku" : "[parameters('windowsOSVersion')]",
             "version":"latest"
           },
           "osDisk" : {
             "name": "osdisk",
             "vhd": {
-              "uri": "[concat('http://',parameters('newStorageAccountName'),'.blob.core.windows.net/',variables('vmStorageAccountContainerName'),'/',variables('OSDiskName'),'.vhd')]"
+              "uri": "[concat('http://',parameters('newStorageAccountName'),'.blob.core.windows.net/',parameters('vmStorageAccountContainerName'),'/',parameters('OSDiskName'),'.vhd')]"
             },
             "caching": "ReadWrite",
             "createOption": "FromImage"
@@ -158,7 +233,7 @@
         "networkProfile": {
           "networkInterfaces": [
             {
-              "id": "[resourceId('Microsoft.Network/networkInterfaces',variables('nicName'))]"
+              "id": "[resourceId('Microsoft.Network/networkInterfaces',parameters('nicName'))]"
             }
           ]
         }

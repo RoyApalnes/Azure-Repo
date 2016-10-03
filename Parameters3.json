@@ -6,7 +6,7 @@
     "adminUserName": { "value": "demo" },
     "adminPassword": { "value": "JRZEeZbQqcb5kKEn" },
     "location": { "value": "North Europe" },
-    "dnsNameForPublicIP": { "value": "itiscloudydemo" },
+    "dnsNameForPublicIP": { "value": "itiscloudydemo-dc01" },
     "imagePublisher": { "value": "MicrosoftWindowsServer" },
     "imageOffer": { "value": "WindowsServer" },
     "windowsOSVersion": { "value": "Windows-Server-Technical-Preview" },
@@ -21,6 +21,6 @@
     "vmStorageAccountContainerName": { "value": "vhds" },
     "vmName": { "value": "DEMO-DC01" },
     "vmSize": { "value": "Standard_F1" },
-    "irtualNetworkName": { "value": "DEMO-VN01" }
+    "virtualNetworkName": { "value": "DEMO-VN01" }
   }
 }
