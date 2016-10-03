@@ -62,16 +62,10 @@
         "Description": "The name of the subnet."
       }
     },
-    "subnetName": {
+    "subnetPrefix": {
       "type": "string",
       "metadata": {
-        "Description": "The name of the subnet."
-      }
-    },
-    "subnetPrefixP": {
-      "type": "string",
-      "metadata": {
-        "Description": "The adresses of the subnet."
+        "Description": "The addresses in the subnet."
       }
     },
     "storageAccountType": {
@@ -114,6 +108,12 @@
       "type": "string",
       "metadata": {
         "Description": "The name of the Virtual Network."
+      }
+    },
+    "dnsNameForPublicIP": {
+      "type": "string",
+      "metadata": {
+        "Description": "The name of the Public IPs DNS."
       }
     },
     "location": {

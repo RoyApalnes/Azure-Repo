@@ -14,7 +14,7 @@
     "nicName": { "value": "DEMO-DC01-NIC01" },
     "addressPrefix": { "value": "10.0.0.0/16" },
     "subnetName": { "value": "DEMO-Backend" },
-    "subnetPrefixP": { "value": "10.0.0.0/24" },
+    "subnetPrefix": { "value": "10.0.0.0/24" },
     "storageAccountType": { "value": "Standard_GRS" },
     "publicIPAddressName": { "value": "DEMO-DC01-PIP01" },
     "publicIPAddressType": { "value": "Dynamic" },
