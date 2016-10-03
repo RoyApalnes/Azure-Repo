@@ -6,6 +6,21 @@
     "adminUserName": { "value": "demo" },
     "adminPassword": { "value": "JRZEeZbQqcb5kKEn" },
     "location": { "value": "North Europe" },
-    "dnsNameForPublicIP": { "value": "itiscloudydemo" }
+    "dnsNameForPublicIP": { "value": "itiscloudydemo" },
+    "imagePublisher": { "value": "MicrosoftWindowsServer" },
+    "imageOffer": { "value": "WindowsServer" },
+    "windowsOSVersion": { "value": "Windows-Server-Technical-Preview" },
+    "OSDiskName": { "value": "DEMO-DC01-OSdisk01" },
+    "nicName": { "value": "DEMO-DC01-NIC01" },
+    "addressPrefix": { "value": "10.0.0.0/16" },
+    "subnetName": { "value": "DEMO-Backend" },
+    "subnetPrefixP": { "value": "10.0.0.0/24" },
+    "storageAccountType": { "value": "Standard_GRS" },
+    "publicIPAddressName": { "value": "DEMO-DC01-PIP01" },
+    "publicIPAddressType": { "value": "Dynamic" },
+    "vmStorageAccountContainerName": { "value": "vhds" },
+    "vmName": { "value": "DEMO-DC01" },
+    "vmSize": { "value": "Standard_F1" },
+    "irtualNetworkName": { "value": "DEMO-VN01" }
   }
 }
