@@ -6,5 +6,7 @@ $rgName = "Demo"
 New-AzureRmResourceGroup -Name $rgName -Location $locName
 
 $deployName="DEMO-DC01"
-$templatePath = "C:\Users\Roy\OneDrive\Azure\ADDS\VirtualMachineTemplate1.json"
-$parameterFile = "C:\Users\Roy\OneDrive\Azure\ADDS\Parameters1.json"
+$templatePath = "C:\Users\RoyAPALNES\OneDrive\Azure\GitRepo\VirtualMachineTemplate3.json"
+$parameterFile = "C:\Users\RoyAPALNES\OneDrive\Azure\GitRepo\Parameters3.json"
+
+New-AzureRmResourceGroupDeployment -Name $deployName -ResourceGroupName $rgNamep -TemplateFile $templatePat -TemplateParameterFile $parameterFile
