@@ -1,0 +1,26 @@
+{
+  "$schema": "https://schema.management.azure.com/schemas/2015-01-01/deploymentTemplate.json",
+  "contentVersion": "1.0.0.0",
+  "parameters": {
+    "newStorageAccountName": { "value": "itiscloudydemo" },
+    "adminUserName": { "value": "demo" },
+    "adminPassword": { "value": "JRZEeZbQqcb5kKEn" },
+    "location": { "value": "North Europe" },
+    "dnsNameForPublicIP": { "value": "itiscloudydemo-dc02" },
+    "imagePublisher": { "value": "MicrosoftWindowsServer" },
+    "imageOffer": { "value": "WindowsServer" },
+    "windowsOSVersion": { "value": "Windows-Server-Technical-Preview" },
+    "OSDiskName": { "value": "DEMO-DC02-OSdisk01" },
+    "nicName": { "value": "DEMO-DC02-NIC01" },
+    "addressPrefix": { "value": "10.0.0.0/16" },
+    "subnetName": { "value": "DEMO-Backend" },
+    "subnetPrefix": { "value": "10.0.0.0/24" },
+    "storageAccountType": { "value": "Standard_GRS" },
+    "publicIPAddressName": { "value": "DEMO-DC02-PIP01" },
+    "publicIPAddressType": { "value": "Dynamic" },
+    "vmStorageAccountContainerName": { "value": "vhds" },
+    "vmName": { "value": "DEMO-DC02" },
+    "vmSize": { "value": "Standard_F1" },
+    "virtualNetworkName": { "value": "DEMO-VN01" }
+  }
+}
