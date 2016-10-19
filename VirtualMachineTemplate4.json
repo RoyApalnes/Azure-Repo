@@ -121,6 +121,48 @@
       "metadata": {
         "Description": "The name of the location used to host your VM."
       }
+    },
+    "apiVersion": {
+      "type": "string",
+      "metadata": {
+        "Description": "The api version date."
+      }
+    },
+    "dnsLabelPrefix": {
+      "type": "string",
+      "metadata": {
+        "Description": "The DNS Prefix of the Active Directory Domain."
+      }
+    },
+    "domainToJoin": {
+      "type": "string",
+      "metadata": {
+        "Description": "The Active Directory Domain to join.."
+      }
+    },
+    "domainUsername": {
+      "type": "string",
+      "metadata": {
+        "Description": "The Domain UserName with privilege to Domain Join Computers."
+      }
+    },
+    "domainJoinOptions": {
+      "type": "string",
+      "metadata": {
+        "Description": "I don't know really know yet."
+      }
+    },
+    "domainPassword": {
+      "type": "string",
+      "metadata": {
+        "Description": "Join Domain UserName Password."
+      }
+    },
+    "ouPath": {
+      "type": "string",
+      "metadata": {
+        "Description": "The Path for the OU to move the Server into."
+      }
     }
   },
   "variables": {
@@ -236,8 +278,32 @@
               "id": "[resourceId('Microsoft.Network/networkInterfaces',parameters('nicName'))]"
             }
           ]
-        }
+        },
+      { 
+195       "apiVersion": "[parameters('apiVersion')]", 
+196       "type": "Microsoft.Compute/virtualMachines/extensions", 
+197       "name": "[concat(parameters('dnsLabelPrefix'),'/joindomain')]", 
+198       "location": "[resourceGroup().location]", 
+199       "dependsOn": [ 
+200         "[concat('Microsoft.Compute/virtualMachines/', parameters('dnsLabelPrefix'))]" 
+201       ], 
+202       "properties": { 
+203         "publisher": "Microsoft.Compute", 
+204         "type": "JsonADDomainExtension", 
+205         "typeHandlerVersion": "1.3", 
+206         "autoUpgradeMinorVersion": true, 
+207         "settings": { 
+208           "Name": "[parameters('domainToJoin')]", 
+209           "OUPath": "[parameters('ouPath')]", 
+210           "User": "[concat(parameters('domainToJoin'), '\\', parameters('domainUsername'))]", 
+211           "Restart": "true", 
+212           "Options": "[parameters('domainJoinOptions')]" 
+213         }, 
+214         "protectedsettings": { 
+215           "Password": "[parameters('domainPassword')]" 
+216         },
+          },
+        },
       }
-    }
-  ]
+    ]
 }
