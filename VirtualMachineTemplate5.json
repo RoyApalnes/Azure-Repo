@@ -116,6 +116,42 @@
         "Description": "The name of the Public IPs DNS."
       }
     },
+    "dnsLabelPrefix": {
+      "type": "string",
+      "metadata": {
+        "Description": "The name of the Public IPs DNS."
+      }
+    },
+    "ouPath": {
+      "type": "string",
+      "metadata": {
+        "Description": "The name of the Public IPs DNS."
+      }
+    },
+    "domainToJoin": {
+      "type": "string",
+      "metadata": {
+        "Description": "The name of the Public IPs DNS."
+      }
+    },
+    "domainUsername": {
+      "type": "string",
+      "metadata": {
+        "Description": "The name of the Public IPs DNS."
+      }
+    },
+    "domainJoinOptions": {
+      "type": "string",
+      "metadata": {
+        "Description": "The name of the Public IPs DNS."
+      }
+    },
+    "domainPassword": {
+      "type": "string",
+      "metadata": {
+        "Description": "The name of the Public IPs DNS."
+      }
+    },
     "location": {
       "type": "string",
       "metadata": {
@@ -124,6 +160,7 @@
     }
   },
   "variables": {
+    "apiVersion": "2015-06-15",
     "vnetID": "[resourceId('Microsoft.Network/virtualNetworks',parameters('virtualNetworkName'))]",
     "subnetRef": "[concat(variables('vnetID'),'/subnets/',parameters('subnetName'))]"
   },
@@ -237,8 +274,32 @@
             }
           ]
         }
-        
-      }
+            {
+      "apiVersion": "[variables('apiVersion')]",
+      "type": "Microsoft.Compute/virtualMachines/extensions",
+      "name": "[concat(parameters('dnsLabelPrefix'),'/joindomain')]",
+      "location": "[resourceGroup().location]",
+      "dependsOn": [
+        "[concat('Microsoft.Compute/virtualMachines/', parameters('dnsLabelPrefix'))]"
+      ],
+      "properties": {
+        "publisher": "Microsoft.Compute",
+        "type": "JsonADDomainExtension",
+        "typeHandlerVersion": "1.3",
+        "autoUpgradeMinorVersion": true,
+        "settings": {
+          "Name": "[parameters('domainToJoin')]",
+          "OUPath": "[parameters('ouPath')]",
+          "User": "[concat(parameters('domainToJoin'), '\\', parameters('domainUsername'))]",
+          "Restart": "true",
+          "Options": "[parameters('domainJoinOptions')]"
+        },
+        "protectedsettings": {
+          "Password": "[parameters('domainPassword')]"
+        }
+      },
+     }
     }
+   }
   ]
 }
