@@ -22,7 +22,6 @@
     "vmName": { "value": "DEMO-ADFS02" },
     "vmSize": { "value": "Standard_F1" },
     "virtualNetworkName": { "value": "DEMO-VN01" },
-    "apiVersion": { "value": "2015-06-15" },
     "dnsLabelPrefix": { "value": "itiscloudy" },
     "domainToJoin": { "value": "itiscloudy.com" },
     "domainUsername": { "value": "demo" },
